@@ -9,8 +9,7 @@
 		private $talking = false;
 		
 		public function __construct($opt){
-	        // $this->name = $opt['name'];
-	        // $this->lang = $opt['lang'];
+	        
 	        foreach($opt as $key => $value) {
 				$this->$key = $value;
 			}
@@ -62,10 +61,8 @@
 			
 			$couch = "http://".$this->host.":".$this->port."/";
 			$req = "$mthd /$db/$doc"; 
-			// return "<br />Couch: ".$couch."<br />DB: ".$db."<br />Request: ".$req."<br />Data: ".$payload."<br /> Couch Said: ".$couch_said;
 			//Production
-			// $think[] = $mthd;
-			// print_r($think);
+			
 			return $couch_said;
 	    }
 	    
@@ -96,9 +93,7 @@
 	    	// echo $_db;
 	    	return $this->talk($words);
 	    }
-	    // public function viewDB($db_name){
-	    	
-	    // }
+	    
 	    public function rmDB($db_name){
 	    	$words = array(
 	    		"DELETE",
