@@ -1,4 +1,6 @@
 <?php
+	define("CTALK_ALL_FIELDS","all_fields");
+
 	class CouchTalk{
 		private $protocol;
 		private $host;
@@ -76,14 +78,24 @@
 	    	echo $this->talk($words);
 	    }
 	    public function lsDB($db_name,$view,$key){
-	    	if(isset($view)){
+	    	if(isset($view) && !is_bool($view)){
+	    		
 	    		if(isset($key)){
-	    			$_db = $db_name."/$view?key=".'"'.$key.'"';	
+	    			if(substr($key,0,1) == "["){
+	    				$_db = $db_name."/$view/?key=".$key;
+	    			}else{
+	    				$_db = $db_name."/$view/?key=".'"'.$key.'"';
+	    			}
 	    		}else{
-	    			$_db = $db_name."/$view";
+		    			$_db = $db_name."/$view";
+	    			
 	    		}
 	    	}else{
-	    		$_db = $db_name."/_all_docs";
+	    		if($view !=  true){
+	    			$_db = $db_name."/_all_docs";
+	    		}else{
+	    			$_db = $db_name."/_all_docs/?include_docs=true";
+	    		}
 	    	}
 	    	$words = array(
 	    		"GET",
@@ -159,6 +171,9 @@
 	    	}else{
 	    		$revDoc->$fields = $data;
 	    	}
+	    	if($fields == "all_fields"){
+	    		$revDoc = $data;
+	    	}
 	    	if(isset($rev)){
 	    		$revDoc["_rev"] = $rev;
 	    	}
@@ -175,7 +190,7 @@
 	    		$this->db,
 	    		$name."?rev=$rev"
 	    	);
-	    	echo $this->talk($words);
+	    	return $this->talk($words);
 	    }
 	    //Replication Methods
 	    	//in next version
