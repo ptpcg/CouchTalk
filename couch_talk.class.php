@@ -38,9 +38,9 @@
 		    	if(isset($think["say"])){
 		    		$payload = json_encode($think["say"]);   
 		    	}
-				curl_setopt($ch, CURLOPT_URL, "http://".$this->host.":".$this->port."/$db/$doc");
+				curl_setopt($ch, CURLOPT_URL, $this->protocol.$this->host.":".$this->port."/$db/$doc");
 			}else{
-				curl_setopt($ch, CURLOPT_URL, "http://".$this->host.":".$this->port."/$db");
+				curl_setopt($ch, CURLOPT_URL, $this->protocol.$this->host.":".$this->port."/$db");
 			}
 			//Request Type
 			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $mthd);
